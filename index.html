@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>StackUp — Apprends. Simule. Investis.</title>
+  <title>Krezio — Apprends. Simule. Investis.</title>
+  <style>html { scroll-behavior: smooth; }</style>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --bg: #0a0a0f;
@@ -27,7 +29,6 @@
       overflow-x: hidden;
     }
 
-    /* Grain overlay */
     body::before {
       content: '';
       position: fixed;
@@ -170,11 +171,19 @@
       animation: fadeUp 0.6s 0.2s ease both;
     }
 
-    .waitlist-form {
+    /* WAITLIST FORM */
+    .waitlist-wrap {
       margin-top: 48px;
+      animation: fadeUp 0.6s 0.3s ease both;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .waitlist-form {
       display: flex;
       gap: 12px;
-      animation: fadeUp 0.6s 0.3s ease both;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -192,11 +201,10 @@
       transition: border-color 0.2s;
     }
 
-    .waitlist-form input:focus {
-      border-color: var(--accent);
-    }
-
+    .waitlist-form input:focus { border-color: var(--accent); }
     .waitlist-form input::placeholder { color: var(--muted); }
+    .waitlist-form input.error { border-color: #ef4444; }
+    .waitlist-form input.success { border-color: var(--accent); }
 
     .btn-primary {
       background: var(--accent);
@@ -208,22 +216,67 @@
       font-weight: 600;
       font-size: 0.95rem;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
       white-space: nowrap;
     }
 
-    .btn-primary:hover {
+    .btn-primary:hover:not(:disabled) {
       transform: translateY(-2px);
       box-shadow: 0 12px 40px rgba(200,241,53,0.35);
     }
 
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .form-msg {
+      font-size: 0.88rem;
+      min-height: 20px;
+      transition: all 0.3s;
+    }
+    .form-msg.error { color: #ef4444; }
+    .form-msg.success { color: var(--accent); }
+    .form-msg.info { color: var(--muted); }
+
+    /* SUCCESS STATE */
+    .success-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .success-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(200,241,53,0.1);
+      border: 1px solid rgba(200,241,53,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .success-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .success-sub {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
     .social-proof {
-      margin-top: 32px;
       color: var(--muted);
       font-size: 0.85rem;
       animation: fadeUp 0.6s 0.4s ease both;
     }
-
     .social-proof strong { color: var(--text); }
 
     /* FEATURES */
@@ -277,18 +330,10 @@
       transition: opacity 0.3s;
     }
 
-    .card:hover {
-      border-color: rgba(200,241,53,0.3);
-      transform: translateY(-4px);
-    }
-
+    .card:hover { border-color: rgba(200,241,53,0.3); transform: translateY(-4px); }
     .card:hover::before { opacity: 1; }
 
-    .card-icon {
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-      display: block;
-    }
+    .card-icon { font-size: 2.2rem; margin-bottom: 20px; display: block; }
 
     .card h3 {
       font-family: 'Syne', sans-serif;
@@ -297,13 +342,9 @@
       margin-bottom: 12px;
     }
 
-    .card p {
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 0.95rem;
-    }
+    .card p { color: var(--muted); line-height: 1.7; font-size: 0.95rem; }
 
-    /* SIMULATOR PREVIEW */
+    /* SIMULATOR */
     .simulator-section {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -340,18 +381,10 @@
       margin-bottom: 20px;
     }
 
-    .sim-desc {
-      color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 32px;
-    }
+    .sim-desc { color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
 
-    .sim-stats {
-      display: flex;
-      gap: 32px;
-    }
+    .sim-stats { display: flex; gap: 32px; }
 
-    .stat-item { }
     .stat-value {
       font-family: 'Syne', sans-serif;
       font-size: 2rem;
@@ -359,11 +392,7 @@
       color: var(--accent);
     }
 
-    .stat-label {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-top: 4px;
-    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
 
     .sim-visual {
       background: var(--bg);
@@ -379,32 +408,11 @@
       margin-bottom: 24px;
     }
 
-    .sim-header-title {
-      font-size: 0.8rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
+    .sim-header-title { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .sim-amount { font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800; margin-bottom: 8px; }
+    .sim-change { font-size: 0.85rem; color: var(--accent); margin-bottom: 24px; }
 
-    .sim-amount {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-
-    .sim-change {
-      font-size: 0.85rem;
-      color: var(--accent);
-      margin-bottom: 24px;
-    }
-
-    .chart-bars {
-      display: flex;
-      align-items: flex-end;
-      gap: 6px;
-      height: 80px;
-    }
+    .chart-bars { display: flex; align-items: flex-end; gap: 6px; height: 80px; }
 
     .bar {
       flex: 1;
@@ -449,11 +457,7 @@
       cursor: pointer;
     }
 
-    .module-card:hover {
-      border-color: rgba(200,241,53,0.4);
-      transform: translateY(-3px);
-    }
-
+    .module-card:hover { border-color: rgba(200,241,53,0.4); transform: translateY(-3px); }
     .module-emoji { font-size: 2rem; margin-bottom: 16px; display: block; }
 
     .module-title {
@@ -463,10 +467,7 @@
       margin-bottom: 8px;
     }
 
-    .module-count {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
+    .module-count { font-size: 0.8rem; color: var(--muted); }
 
     .progress-bar {
       height: 3px;
@@ -476,13 +477,9 @@
       overflow: hidden;
     }
 
-    .progress-fill {
-      height: 100%;
-      background: var(--accent);
-      border-radius: 100px;
-    }
+    .progress-fill { height: 100%; background: var(--accent); border-radius: 100px; }
 
-    /* CTA SECTION */
+    /* CTA */
     .cta-section {
       text-align: center;
       padding: 120px 48px;
@@ -509,11 +506,7 @@
       margin-bottom: 20px;
     }
 
-    .cta-sub {
-      color: var(--muted);
-      font-size: 1.1rem;
-      margin-bottom: 48px;
-    }
+    .cta-sub { color: var(--muted); font-size: 1.1rem; margin-bottom: 48px; }
 
     /* FOOTER */
     footer {
@@ -526,13 +519,7 @@
       font-size: 0.85rem;
     }
 
-    /* ANIMATIONS */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* FLOATING ELEMENTS */
+    /* FLOATING */
     .float-tag {
       position: absolute;
       background: var(--surface);
@@ -548,55 +535,89 @@
       50% { transform: translateY(-10px); }
     }
 
-    .float-tag-1 {
-      top: 20%;
-      left: 5%;
-      animation-delay: 0s;
-    }
-
-    .float-tag-2 {
-      top: 40%;
-      right: 5%;
-      animation-delay: 1.5s;
-    }
-
+    .float-tag-1 { top: 20%; left: 5%; animation-delay: 0s; }
+    .float-tag-2 { top: 40%; right: 5%; animation-delay: 1.5s; }
     .tag-label { color: var(--muted); font-size: 0.7rem; margin-bottom: 4px; }
     .tag-value { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent); }
 
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      nav { padding: 16px 24px; }
-      nav .nav-links { display: none; }
-      .section { padding: 60px 24px; }
-      .simulator-section { margin: 0 24px; padding: 40px 24px; }
-      .sim-grid { grid-template-columns: 1fr; gap: 40px; }
-      .float-tag { display: none; }
-      footer { flex-direction: column; gap: 12px; text-align: center; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* SUCCESS STATE */
-    .success-msg {
-      display: none;
+    /* COUNTER */
+    .counter-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(200,241,53,0.08);
+      border: 1px solid rgba(200,241,53,0.2);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 0.82rem;
       color: var(--accent);
-      font-size: 0.9rem;
-      margin-top: 16px;
+      margin-top: 8px;
+    }
+
+    /* RESPONSIVE MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none !important; }
+      .nav-cta { padding: 8px 16px; font-size: 0.82rem; }
+
+      .hero { padding: 60px 20px; min-height: auto; }
+      h1 { font-size: 2.4rem; }
+      .hero-sub { font-size: 1rem; }
+
+      .waitlist-form { flex-direction: column; align-items: center; width: 100%; }
+      .waitlist-form input { width: 100%; max-width: 100%; }
+      .btn-primary { width: 100%; max-width: 100%; }
+
+      .section { padding: 60px 20px; }
+      .section-title { font-size: 1.8rem; }
+
+      .grid-3 { grid-template-columns: 1fr; }
+
+      .simulator-section { margin: 0 20px; padding: 32px 20px; }
+      .sim-grid { grid-template-columns: 1fr; gap: 32px; }
+      .sim-title { font-size: 1.6rem; }
+      .sim-stats { flex-wrap: wrap; gap: 20px; }
+
+      .modules-row { padding-bottom: 12px; }
+      .module-card { min-width: 180px; padding: 20px; }
+
+      .float-tag { display: none; }
+
+      .cta-section { padding: 80px 20px; }
+      .cta-title { font-size: 2rem; }
+
+      footer {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        padding: 24px 20px;
+        font-size: 0.78rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      h1 { font-size: 2rem; }
+      .sim-amount { font-size: 1.8rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
-    <div class="logo">Stack<span>Up</span></div>
+    <div class="logo">Kre<span>zio</span></div>
     <div class="nav-links" style="display:flex; gap:32px;">
       <a href="#apprendre">Apprendre</a>
       <a href="#simuler">Simuler</a>
       <a href="#investir">Investir</a>
     </div>
-    <a href="#waitlist" class="nav-cta">Rejoindre la bêta</a>
+    <a href="#waitlist-cta" class="nav-cta" onclick="scrollToWaitlist(event)">Rejoindre la bêta</a>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="float-tag float-tag-1">
       <div class="tag-label">Ton arrondi ce mois</div>
@@ -619,47 +640,59 @@
     </h1>
 
     <p class="hero-sub">
-      Apprends la finance en 5 minutes par jour. Simule ta croissance. 
+      Apprends la finance en 5 minutes par jour. Simule ta croissance.
       Prépare-toi à investir ton cashback automatiquement — sans douleur, sans jargon.
     </p>
 
-    <div class="waitlist-form" id="waitlist">
-      <input type="email" id="email-input" placeholder="ton@email.com" />
-      <button class="btn-primary" onclick="handleWaitlist()">Je veux ma place →</button>
+    <div class="waitlist-wrap" id="waitlist">
+      <div class="waitlist-form" id="form-hero">
+        <input
+          type="email"
+          id="email-hero"
+          placeholder="ton@email.com"
+          onkeydown="if(event.key==='Enter') submitWaitlist('hero')"
+        />
+        <button class="btn-primary" id="btn-hero" onclick="submitWaitlist('hero')">
+          Je veux ma place →
+        </button>
+      </div>
+      <div class="form-msg" id="msg-hero"></div>
+      <div class="success-state" id="success-hero">
+        <div class="success-icon">✓</div>
+        <div class="success-title">Tu es sur la liste !</div>
+        <div class="success-sub">On te prévient en premier dès l'ouverture de la bêta.</div>
+        <div class="counter-badge" id="counter-hero">🔥 <span>...</span> personnes sur la waitlist</div>
+      </div>
     </div>
-    <div class="success-msg" id="success-msg">
-      ✓ Tu es sur la liste ! On te prévient en premier.
-    </div>
-    <p class="social-proof">
-      <strong>342 personnes</strong> déjà sur la waitlist cette semaine
+
+    <p class="social-proof" id="social-proof-hero">
+      Rejoins les premiers à découvrir Krezio
     </p>
   </section>
 
-  <!-- FEATURES -->
   <section class="section" id="apprendre">
     <div class="section-label">Ce que tu vas trouver</div>
     <h2 class="section-title">Tout ce qu'on t'a jamais appris sur l'argent</h2>
-
     <div class="grid-3">
       <div class="card">
         <span class="card-icon">🎓</span>
         <h3>Apprentissage gamifié</h3>
-        <p>Modules courts façon Duolingo. ETF, Crypto, Or, Fiscalité, Private Equity — expliqués comme si t'avais 15 ans.</p>
+        <p>Modules courts façon Duolingo. ETF, Crypto, Or, Fiscalité — expliqués comme si t'avais 15 ans.</p>
       </div>
       <div class="card">
         <span class="card-icon">🤖</span>
         <h3>Coach IA personnel</h3>
-        <p>Pose n'importe quelle question finance. Ton coach IA retient ton niveau et adapte ses réponses. Disponible 24/7.</p>
+        <p>Pose n'importe quelle question finance. Ton coach IA retient ton niveau et adapte ses réponses. 24/7.</p>
       </div>
       <div class="card">
         <span class="card-icon">📊</span>
         <h3>Simulateurs temps réel</h3>
-        <p>Vois combien ton arrondi quotidien devient en 5, 10, 20 ans avec différents produits. Sans ouvrir Excel.</p>
+        <p>Vois combien ton arrondi quotidien devient en 5, 10, 20 ans. Sans ouvrir Excel.</p>
       </div>
       <div class="card">
         <span class="card-icon">💸</span>
         <h3>Cashback & arrondi</h3>
-        <p>Connecte ta banque et simule combien tu aurais épargné sans t'en rendre compte. Comme Bitstack mais pour tout.</p>
+        <p>Simule combien tu aurais épargné sans t'en rendre compte. Comme Bitstack mais pour tous les produits.</p>
       </div>
       <div class="card">
         <span class="card-icon">🏆</span>
@@ -669,31 +702,30 @@
       <div class="card">
         <span class="card-icon">🗺️</span>
         <h3>Roadmap investisseur</h3>
-        <p>Un plan pas-à-pas pour ouvrir ton PEA, ton compte crypto, comprendre la flat tax. Méthodologie claire et actionnelle.</p>
+        <p>Un plan pas-à-pas pour ouvrir ton PEA, comprendre la flat tax, investir pas à pas.</p>
       </div>
     </div>
   </section>
 
-  <!-- SIMULATOR SECTION -->
   <div class="simulator-section" id="simuler">
     <div class="sim-grid">
       <div>
         <div class="section-label">Simulateur</div>
         <h2 class="sim-title">Et si tu arrondissais chaque achat à l'euro supérieur ?</h2>
         <p class="sim-desc">
-          En moyenne, ça représente 0,50€ par transaction. Pour 3 achats par jour, 
-          c'est 45€/mois qui peuvent travailler pour toi. Voilà ce que ça donne.
+          En moyenne, ça représente 0,50€ par transaction. Pour 3 achats par jour,
+          c'est 45€/mois qui peuvent travailler pour toi.
         </p>
         <div class="sim-stats">
-          <div class="stat-item">
+          <div>
             <div class="stat-value">5 ans</div>
             <div class="stat-label">Horizon ETF World</div>
           </div>
-          <div class="stat-item">
+          <div>
             <div class="stat-value">+2 940€</div>
             <div class="stat-label">vs 2 700€ investi</div>
           </div>
-          <div class="stat-item">
+          <div>
             <div class="stat-value">+8,9%</div>
             <div class="stat-label">Rendement annualisé</div>
           </div>
@@ -707,15 +739,9 @@
         <div class="sim-amount">2 940 €</div>
         <div class="sim-change">↑ +240 € vs capital investi</div>
         <div class="chart-bars">
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
           <div class="bar"></div>
         </div>
         <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:0.7rem;color:var(--muted)">
@@ -725,11 +751,9 @@
     </div>
   </div>
 
-  <!-- MODULES PREVIEW -->
   <section class="section" id="investir">
     <div class="section-label">Modules disponibles</div>
     <h2 class="section-title">De zéro à investisseur éclairé</h2>
-
     <div class="modules-row">
       <div class="module-card">
         <span class="module-emoji">📈</span>
@@ -770,67 +794,155 @@
     </div>
   </section>
 
-  <!-- CTA FINAL -->
-  <section class="cta-section">
+  <section class="cta-section" id="waitlist-cta">
     <h2 class="cta-title">Prêt à faire<br/>travailler ton argent ?</h2>
     <p class="cta-sub">Rejoins la bêta. C'est gratuit. C'est maintenant.</p>
-    <div class="waitlist-form" style="justify-content:center">
-      <input type="email" id="email-input-2" placeholder="ton@email.com" />
-      <button class="btn-primary" onclick="handleWaitlist2()">Rejoindre la waitlist →</button>
-    </div>
-    <div class="success-msg" id="success-msg-2">
-      ✓ Tu es sur la liste ! On te prévient en premier.
+
+    <div class="waitlist-wrap">
+      <div class="waitlist-form" id="form-cta">
+        <input
+          type="email"
+          id="email-cta"
+          placeholder="ton@email.com"
+          onkeydown="if(event.key==='Enter') submitWaitlist('cta')"
+        />
+        <button class="btn-primary" id="btn-cta" onclick="submitWaitlist('cta')">
+          Rejoindre la waitlist →
+        </button>
+      </div>
+      <div class="form-msg" id="msg-cta"></div>
+      <div class="success-state" id="success-cta">
+        <div class="success-icon">✓</div>
+        <div class="success-title">Tu es sur la liste !</div>
+        <div class="success-sub">On te prévient en premier dès l'ouverture de la bêta.</div>
+        <div class="counter-badge" id="counter-cta">🔥 <span>...</span> personnes sur la waitlist</div>
+      </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
-    <div class="logo" style="font-size:1.1rem">Stack<span style="color:var(--accent)">Up</span></div>
-    <div>Fait avec ☕ et Claude Code · 2025</div>
+    <div class="logo" style="font-size:1.1rem">Kre<span style="color:var(--accent)">zio</span></div>
+    <div>Krezio · 2026</div>
     <div>Pas de conseil financier · Simulateur pédagogique</div>
   </footer>
 
   <script>
-    function handleWaitlist() {
-      const email = document.getElementById('email-input').value;
-      if (!email || !email.includes('@')) {
-        document.getElementById('email-input').style.borderColor = '#ef4444';
-        return;
-      }
-      document.getElementById('email-input').style.borderColor = 'var(--accent)';
-      document.querySelector('.waitlist-form').style.display = 'none';
-      document.getElementById('success-msg').style.display = 'block';
-      // Ici tu brancheras ton Supabase ou Resend
-      console.log('Waitlist email:', email);
+    // ─── SCROLL VERS WAITLIST ─────────────────────────────────────
+    function scrollToWaitlist(e) {
+      e.preventDefault()
+      const target = document.getElementById('waitlist-cta')
+      if (!target) return
+      const offset = 80
+      const top = target.getBoundingClientRect().top + window.scrollY - offset
+      window.scrollTo({ top, behavior: 'smooth' })
+      setTimeout(() => {
+        const input = document.getElementById('email-cta')
+        if (input) input.focus()
+      }, 600)
     }
 
-    function handleWaitlist2() {
-      const email = document.getElementById('email-input-2').value;
-      if (!email || !email.includes('@')) {
-        document.getElementById('email-input-2').style.borderColor = '#ef4444';
-        return;
+    // ─── SUPABASE INIT ───────────────────────────────────────────
+    const { createClient } = supabase
+    const sb = createClient(
+      'https://twzdtbkwormispmspjai.supabase.co',
+      'sb_publishable_2w46qHLOgKKwdhRuMN0p-w_7TTvUISX'
+    )
+
+    // ─── COMPTEUR WAITLIST ────────────────────────────────────────
+    async function loadCount() {
+      try {
+        const { count } = await sb
+          .from('waitlist')
+          .select('*', { count: 'exact', head: true })
+        if (count !== null) {
+          document.querySelectorAll('.counter-badge span').forEach(el => {
+            el.textContent = count
+          })
+          if (count > 0) {
+            document.getElementById('social-proof-hero').innerHTML =
+              `<strong>${count} personne${count > 1 ? 's' : ''}</strong> déjà sur la waitlist`
+          }
+        }
+      } catch (e) {}
+    }
+    loadCount()
+
+    // ─── SUBMIT WAITLIST ──────────────────────────────────────────
+    async function submitWaitlist(zone) {
+      const input   = document.getElementById(`email-${zone}`)
+      const btn     = document.getElementById(`btn-${zone}`)
+      const msg     = document.getElementById(`msg-${zone}`)
+      const form    = document.getElementById(`form-${zone}`)
+      const success = document.getElementById(`success-${zone}`)
+      const email   = input.value.trim().toLowerCase()
+
+      // Validation basique
+      input.classList.remove('error', 'success')
+      msg.className = 'form-msg'
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        input.classList.add('error')
+        msg.className = 'form-msg error'
+        msg.textContent = 'Entre une adresse email valide.'
+        return
       }
-      document.getElementById('email-input-2').closest('.waitlist-form').style.display = 'none';
-      document.getElementById('success-msg-2').style.display = 'block';
-      console.log('Waitlist email:', email);
+
+      // Loading
+      btn.disabled = true
+      btn.textContent = '...'
+      msg.className = 'form-msg info'
+      msg.textContent = 'Inscription en cours...'
+
+      try {
+        const { error } = await sb
+          .from('waitlist')
+          .insert([{ email, source: zone }])
+
+        if (error) {
+          if (error.code === '23505') {
+            // Email déjà inscrit
+            input.classList.add('success')
+            msg.className = 'form-msg success'
+            msg.textContent = '✓ Tu es déjà sur la liste !'
+            btn.disabled = false
+            btn.textContent = zone === 'hero' ? 'Je veux ma place →' : 'Rejoindre la waitlist →'
+          } else {
+            throw error
+          }
+          return
+        }
+
+        // Succès
+        form.style.display = 'none'
+        msg.textContent = ''
+        success.style.display = 'flex'
+        await loadCount()
+
+      } catch (e) {
+        btn.disabled = false
+        btn.textContent = zone === 'hero' ? 'Je veux ma place →' : 'Rejoindre la waitlist →'
+        msg.className = 'form-msg error'
+        msg.textContent = 'Une erreur est survenue. Réessaie dans un instant.'
+        console.error(e)
+      }
     }
 
-    // Intersection Observer pour animations au scroll
+    // ─── ANIMATIONS AU SCROLL ─────────────────────────────────────
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
+          entry.target.style.opacity = '1'
+          entry.target.style.transform = 'translateY(0)'
         }
-      });
-    }, { threshold: 0.1 });
+      })
+    }, { threshold: 0.1 })
 
     document.querySelectorAll('.card, .module-card, .sim-visual').forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease, border-color 0.3s';
-      observer.observe(el);
-    });
+      el.style.opacity = '0'
+      el.style.transform = 'translateY(20px)'
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease, border-color 0.3s'
+      observer.observe(el)
+    })
   </script>
 </body>
 </html>
