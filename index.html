@@ -17,12 +17,21 @@
       --muted: #6b6b80;
       --border: #2a2a38;
     }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     html, body {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+    }
+
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -31,7 +40,12 @@
     }
 
     /* NAV */
-    nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(10,10,15,0.85); backdrop-filter: blur(20px); z-index: 100; }
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 48px; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0;
+      background: rgba(10,10,15,0.85); backdrop-filter: blur(20px); z-index: 100;
+    }
     .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; text-decoration: none; color: inherit; }
     .logo span { color: var(--accent); }
     nav a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
@@ -49,23 +63,23 @@
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
     h1 {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(1.8rem, 8vw, 5.5rem);
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  max-width: 100%;
-  width: 100%;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  animation: fadeUp 0.6s 0.1s ease both;
-}
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 6vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      max-width: 100%;
+      width: 100%;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
     h1 em { font-style: normal; color: var(--accent); }
     h1 .purple { color: #a78bfa; }
 
     .hero-sub { margin-top: 24px; font-size: 1.15rem; color: var(--muted); max-width: 540px; line-height: 1.7; animation: fadeUp 0.6s 0.2s ease both; }
 
-    /* COUNTER — toujours visible, jamais dans success-state */
+    /* COUNTER */
     .counter-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(200,241,53,0.08); border: 1px solid rgba(200,241,53,0.2); border-radius: 100px; padding: 8px 18px; font-size: 0.85rem; color: var(--accent); }
 
     /* WAITLIST */
@@ -88,7 +102,7 @@
     .success-state { display: none; flex-direction: column; align-items: center; gap: 8px; animation: fadeUp 0.5s ease both; }
     .success-icon { width: 56px; height: 56px; background: rgba(200,241,53,0.1); border: 1px solid rgba(200,241,53,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
     .success-title { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--accent); }
-    .success-sub { color: var(--muted); font-size: 0.9rem; }
+    .success-sub { color: var(--muted); font-size: 0.9rem; text-align: center; }
 
     .social-proof { color: var(--muted); font-size: 0.85rem; animation: fadeUp 0.6s 0.4s ease both; }
     .social-proof strong { color: var(--text); }
@@ -165,31 +179,45 @@
 
     @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* RESPONSIVE */
+    /* ── RESPONSIVE MOBILE ── */
     @media (max-width: 768px) {
       nav { padding: 16px 20px; }
       .nav-links { display: none !important; }
       .nav-cta { padding: 8px 16px; font-size: 0.82rem; }
-      .hero { padding: 60px 20px; min-height: auto; }
-      h1 { font-size: 2.4rem; }
-      .hero-sub { font-size: 1rem; }
+
+      .hero { padding: 48px 20px; min-height: auto; }
+
+      /* Titre réduit pour que "investissements" tienne sur une ligne */
+      h1 { font-size: 1.55rem; letter-spacing: -0.01em; line-height: 1.15; }
+
+      .hero-sub { font-size: 0.95rem; }
+
       .waitlist-form { flex-direction: column; align-items: center; width: 100%; }
       .waitlist-form input { width: 100%; max-width: 100%; }
       .btn-primary { width: 100%; max-width: 100%; }
+
       .section { padding: 60px 20px; }
       .section-title { font-size: 1.8rem; }
       .grid-3 { grid-template-columns: 1fr; }
+
       .simulator-section { margin: 0 20px; padding: 32px 20px; }
       .sim-grid { grid-template-columns: 1fr; gap: 32px; }
       .sim-title { font-size: 1.6rem; }
       .sim-stats { flex-wrap: wrap; gap: 20px; }
+
       .module-card { min-width: 180px; padding: 20px; }
+
       .float-tag { display: none; }
+
       .cta-section { padding: 80px 20px; }
       .cta-title { font-size: 2rem; }
+
       footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px 20px; font-size: 0.78rem; }
     }
-    @media (max-width: 400px) { h1 { font-size: 2rem; } .sim-amount { font-size: 1.8rem; } }
+
+    @media (max-width: 390px) {
+      h1 { font-size: 1.35rem; }
+    }
   </style>
 </head>
 <body>
@@ -216,14 +244,17 @@
 
     <div class="badge"><div class="badge-dot"></div>Bêta ouverte — Places limitées</div>
 
-    <h1>Transforme tes<br/><em>dépenses du quotidien</em><br/>en <span class="purple">investissements</span></h1>
+    <h1>
+      Transforme tes<br/>
+      <em>dépenses du quotidien</em><br/>
+      en <span class="purple">investissements</span>
+    </h1>
 
     <p class="hero-sub">
       Apprends la finance en 5 minutes par jour. Simule ta croissance.
-      Prépare-toi à investir ton cashback automatiquement sans douleur, sans jargon.
+      Prépare-toi à investir ton cashback automatiquement — sans douleur, sans jargon.
     </p>
 
-    <!-- COUNTER HERO — toujours visible, jamais caché -->
     <div class="counter-badge" style="margin-top:32px;">
       🔥 <span id="count-hero">...</span> personnes sur la waitlist
     </div>
@@ -241,7 +272,6 @@
         <div class="success-sub">On te prévient en premier dès l'ouverture. Merci de nous rejoindre 🙌</div>
       </div>
     </div>
-
   </section>
 
   <section class="section" id="apprendre">
@@ -292,7 +322,7 @@
     <h2 class="section-title">De zéro à investisseur éclairé</h2>
     <div style="position:relative;">
       <button onclick="scrollModules(-1)" id="arrow-left" style="position:absolute;left:-20px;top:55%;transform:translateY(-50%);z-index:10;background:var(--surface);border:1px solid var(--border);color:var(--text);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;opacity:0.4;">‹</button>
-      <button onclick="scrollModules(1)"  id="arrow-right" style="position:absolute;right:-20px;top:55%;transform:translateY(-50%);z-index:10;background:var(--surface);border:1px solid var(--border);color:var(--text);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;opacity:1;">›</button>
+      <button onclick="scrollModules(1)" id="arrow-right" style="position:absolute;right:-20px;top:55%;transform:translateY(-50%);z-index:10;background:var(--surface);border:1px solid var(--border);color:var(--text);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;opacity:1;">›</button>
       <div class="modules-row" id="modules-row">
         <div class="module-card"><span class="module-emoji">📈</span><div class="module-title">ETF & Actions</div><div class="module-count">8 leçons · ~40 min</div><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div></div>
         <div class="module-card"><span class="module-emoji">₿</span><div class="module-title">Crypto</div><div class="module-count">6 leçons · ~30 min</div><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div></div>
@@ -308,7 +338,6 @@
     <h2 class="cta-title">Prêt à faire<br/>travailler ton argent ?</h2>
     <p class="cta-sub">Rejoins la bêta. C'est gratuit. C'est maintenant.</p>
 
-    <!-- COUNTER CTA — toujours visible, jamais caché -->
     <div class="counter-badge" style="margin-bottom:32px;">
       🔥 <span id="count-cta">...</span> personnes sur la waitlist
     </div>
@@ -342,19 +371,15 @@
       'sb_publishable_2w46qHLOgKKwdhRuMN0p-w_7TTvUISX'
     )
 
-    // BASE = chiffre de départ fictif
-    // Formule : BASE = total voulu - nb vrais inscrits actuels
-    // Ex : tu veux afficher 350, t'as 8 inscrits → BASE = 342
+    // BASE = chiffre voulu - nb vrais inscrits actuels
+    // Ex : afficher 350 avec 8 inscrits → BASE = 342
     const BASE = 342
 
-    // Met à jour les deux counters + social proof
     function updateDisplay(total) {
       document.getElementById('count-hero').textContent = total
       document.getElementById('count-cta').textContent  = total
-
     }
 
-    // Récupère le vrai count depuis Supabase et affiche BASE + count
     async function loadCount() {
       try {
         const { count, error } = await sb
@@ -364,11 +389,9 @@
         updateDisplay(BASE + count)
       } catch (e) {
         console.error('Supabase error:', e)
-        updateDisplay(BASE) // fallback si erreur réseau
+        updateDisplay(BASE)
       }
     }
-
-    // Charge dès l'arrivée sur la page
     loadCount()
 
     // ── SUBMIT ────────────────────────────────────────────────────
@@ -402,7 +425,6 @@
 
         if (error) {
           if (error.code === '23505') {
-            // Email déjà inscrit
             input.classList.add('ok')
             msg.className = 'form-msg success'
             msg.textContent = '✓ Tu es déjà sur la liste !'
@@ -414,11 +436,10 @@
           return
         }
 
-        // ✅ Succès — affiche le remerciement + rafraîchit le counter
         form.style.display    = 'none'
         msg.textContent       = ''
         success.style.display = 'flex'
-        loadCount() // counter se met à jour silencieusement
+        loadCount()
 
       } catch (e) {
         btn.disabled = false
