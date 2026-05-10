@@ -677,7 +677,7 @@
       <div class="card">
         <span class="card-icon">🎓</span>
         <h3>Apprentissage gamifié</h3>
-        <p>Modules courts façon Duolingo. ETF, Crypto, Or, Fiscalité — expliqués comme si t'avais 15 ans.</p>
+        <p>Modules courts façon Duolingo. ETF, Crypto, Or, Fiscalité expliqués comme si t'avais 15 ans.</p>
       </div>
       <div class="card">
         <span class="card-icon">🤖</span>
@@ -692,7 +692,7 @@
       <div class="card">
         <span class="card-icon">💸</span>
         <h3>Cashback & arrondi</h3>
-        <p>Simule combien tu aurais épargné sans t'en rendre compte. Comme Bitstack mais pour tous les produits.</p>
+        <p>Simule combien tu aurais épargné sur chaque produit sans t'en rendre compte.</p>
       </div>
       <div class="card">
         <span class="card-icon">🏆</span>
@@ -702,7 +702,7 @@
       <div class="card">
         <span class="card-icon">🗺️</span>
         <h3>Roadmap investisseur</h3>
-        <p>Un plan pas-à-pas pour ouvrir ton PEA, comprendre la flat tax, investir pas à pas.</p>
+        <p>Un plan pas à pas pour ouvrir ton PEA, comprendre la flat tax, investir pas à pas.</p>
       </div>
     </div>
   </section>
@@ -754,43 +754,66 @@
   <section class="section" id="investir">
     <div class="section-label">Modules disponibles</div>
     <h2 class="section-title">De zéro à investisseur éclairé</h2>
-    <div class="modules-row">
-      <div class="module-card">
-        <span class="module-emoji">📈</span>
-        <div class="module-title">ETF & Actions</div>
-        <div class="module-count">8 leçons · ~40 min</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+
+    <div style="position:relative;">
+
+      <!-- Flèche gauche -->
+      <button onclick="scrollModules(-1)" id="arrow-left" style="
+        position:absolute; left:-20px; top:50%; transform:translateY(-50%);
+        z-index:10; background:var(--surface); border:1px solid var(--border);
+        color:var(--text); width:40px; height:40px; border-radius:50%;
+        cursor:pointer; font-size:1.1rem; display:flex; align-items:center;
+        justify-content:center; transition:all 0.2s; opacity:0.4;
+      ">‹</button>
+
+      <!-- Flèche droite -->
+      <button onclick="scrollModules(1)" id="arrow-right" style="
+        position:absolute; right:-20px; top:50%; transform:translateY(-50%);
+        z-index:10; background:var(--surface); border:1px solid var(--border);
+        color:var(--text); width:40px; height:40px; border-radius:50%;
+        cursor:pointer; font-size:1.1rem; display:flex; align-items:center;
+        justify-content:center; transition:all 0.2s;
+      ">›</button>
+
+      <div class="modules-row" id="modules-row">
+        <div class="module-card">
+          <span class="module-emoji">📈</span>
+          <div class="module-title">ETF & Actions</div>
+          <div class="module-count">8 leçons · ~40 min</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+        </div>
+        <div class="module-card">
+          <span class="module-emoji">₿</span>
+          <div class="module-title">Crypto</div>
+          <div class="module-count">6 leçons · ~30 min</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+        </div>
+        <div class="module-card">
+          <span class="module-emoji">🥇</span>
+          <div class="module-title">Métaux précieux</div>
+          <div class="module-count">5 leçons · ~25 min</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+        </div>
+        <div class="module-card">
+          <span class="module-emoji">🏛️</span>
+          <div class="module-title">Fiscalité</div>
+          <div class="module-count">7 leçons · ~35 min</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+        </div>
+        <div class="module-card">
+          <span class="module-emoji">🌿</span>
+          <div class="module-title">ESG </div>
+          <div class="module-count">4 leçons · ~20 min</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+        </div>
+        <div class="module-card" style="border-style:dashed;opacity:0.5">
+          <span class="module-emoji">🔒</span>
+          <div class="module-title">Private Equity</div>
+          <div class="module-count">Bientôt disponible</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+        </div>
       </div>
-      <div class="module-card">
-        <span class="module-emoji">₿</span>
-        <div class="module-title">Crypto</div>
-        <div class="module-count">6 leçons · ~30 min</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-      </div>
-      <div class="module-card">
-        <span class="module-emoji">🥇</span>
-        <div class="module-title">Métaux précieux</div>
-        <div class="module-count">5 leçons · ~25 min</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-      </div>
-      <div class="module-card">
-        <span class="module-emoji">🏛️</span>
-        <div class="module-title">Fiscalité</div>
-        <div class="module-count">7 leçons · ~35 min</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-      </div>
-      <div class="module-card">
-        <span class="module-emoji">🌿</span>
-        <div class="module-title">ESG & Impact</div>
-        <div class="module-count">4 leçons · ~20 min</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-      </div>
-      <div class="module-card" style="border-style:dashed;opacity:0.5">
-        <span class="module-emoji">🔒</span>
-        <div class="module-title">Private Equity</div>
-        <div class="module-count">Bientôt disponible</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-      </div>
+
     </div>
   </section>
 
@@ -943,6 +966,22 @@
       el.style.transition = 'opacity 0.5s ease, transform 0.5s ease, border-color 0.3s'
       observer.observe(el)
     })
+
+    // ─── CAROUSEL MODULES ─────────────────────────────────────────
+function scrollModules(dir) {
+  const row = document.getElementById('modules-row')
+  row.scrollBy({ left: dir * 240, behavior: 'smooth' })
+}
+
+// Cacher/montrer les flèches selon position scroll
+document.getElementById('modules-row').addEventListener('scroll', function() {
+  const row = this
+  const arrowLeft  = document.getElementById('arrow-left')
+  const arrowRight = document.getElementById('arrow-right')
+  arrowLeft.style.opacity  = row.scrollLeft > 20 ? '1' : '0.4'
+  arrowRight.style.opacity = row.scrollLeft < (row.scrollWidth - row.clientWidth - 20) ? '1' : '0.4'
+})
+
   </script>
 </body>
 </html>
