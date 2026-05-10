@@ -13,604 +13,175 @@
       --surface: #13131a;
       --surface2: #1c1c27;
       --accent: #c8f135;
-      --accent2: #7c3aed;
       --text: #f0f0f5;
       --muted: #6b6b80;
       --border: #2a2a38;
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
     body::before {
       content: '';
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 1000;
-      opacity: 0.4;
+      pointer-events: none; z-index: 1000; opacity: 0.4;
     }
 
     /* NAV */
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 24px 48px;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,15,0.85);
-      backdrop-filter: blur(20px);
-      z-index: 100;
-    }
-
-    .logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 1.5rem;
-      letter-spacing: -0.02em;
-    }
-
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(10,10,15,0.85); backdrop-filter: blur(20px); z-index: 100; }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; text-decoration: none; color: inherit; }
     .logo span { color: var(--accent); }
-
-    nav a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
     nav a:hover { color: var(--text); }
-
-    .nav-cta {
-      background: var(--accent);
-      color: #0a0a0f !important;
-      padding: 10px 24px;
-      border-radius: 100px;
-      font-weight: 500;
-      transition: transform 0.2s, box-shadow 0.2s !important;
-    }
-    .nav-cta:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 30px rgba(200,241,53,0.3);
-    }
+    .nav-cta { background: var(--accent); color: #0a0a0f !important; padding: 10px 24px; border-radius: 100px; font-weight: 500; transition: transform 0.2s, box-shadow 0.2s !important; }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(200,241,53,0.3); }
 
     /* HERO */
-    .hero {
-      min-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 80px 24px;
-      position: relative;
-    }
+    .hero { min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 80px 24px; position: relative; }
+    .hero::before { content: ''; position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+    .hero::after { content: ''; position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(200,241,53,0.08) 0%, transparent 70%); top: 30%; right: 10%; pointer-events: none; }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
+    .badge { display: inline-flex; align-items: center; gap: 8px; background: var(--surface2); border: 1px solid var(--border); border-radius: 100px; padding: 8px 16px; font-size: 0.8rem; color: var(--muted); margin-bottom: 32px; animation: fadeUp 0.6s ease both; }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-    .hero::after {
-      content: '';
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(200,241,53,0.08) 0%, transparent 70%);
-      top: 30%;
-      right: 10%;
-      pointer-events: none;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 8px 16px;
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-bottom: 32px;
-      animation: fadeUp 0.6s ease both;
-    }
-
-    .badge-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-
-    h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.8rem, 7vw, 5.5rem);
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      max-width: 900px;
-      animation: fadeUp 0.6s 0.1s ease both;
-    }
-
-    h1 em {
-      font-style: normal;
-      color: var(--accent);
-    }
-
+    h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; max-width: 900px; animation: fadeUp 0.6s 0.1s ease both; }
+    h1 em { font-style: normal; color: var(--accent); }
     h1 .purple { color: #a78bfa; }
 
-    .hero-sub {
-      margin-top: 24px;
-      font-size: 1.15rem;
-      color: var(--muted);
-      max-width: 540px;
-      line-height: 1.7;
-      animation: fadeUp 0.6s 0.2s ease both;
-    }
+    .hero-sub { margin-top: 24px; font-size: 1.15rem; color: var(--muted); max-width: 540px; line-height: 1.7; animation: fadeUp 0.6s 0.2s ease both; }
 
-    /* WAITLIST FORM */
-    .waitlist-wrap {
-      margin-top: 48px;
-      animation: fadeUp 0.6s 0.3s ease both;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
+    /* COUNTER — toujours visible, jamais dans success-state */
+    .counter-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(200,241,53,0.08); border: 1px solid rgba(200,241,53,0.2); border-radius: 100px; padding: 8px 18px; font-size: 0.85rem; color: var(--accent); }
 
-    .waitlist-form {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .waitlist-form input {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 14px 24px;
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      width: 300px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
+    /* WAITLIST */
+    .waitlist-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; animation: fadeUp 0.6s 0.3s ease both; }
+    .waitlist-form { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .waitlist-form input { background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 14px 24px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.95rem; width: 300px; outline: none; transition: border-color 0.2s; }
     .waitlist-form input:focus { border-color: var(--accent); }
     .waitlist-form input::placeholder { color: var(--muted); }
     .waitlist-form input.error { border-color: #ef4444; }
-    .waitlist-form input.success { border-color: var(--accent); }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #0a0a0f;
-      border: none;
-      border-radius: 100px;
-      padding: 14px 32px;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
-      white-space: nowrap;
-    }
-
-    .btn-primary:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(200,241,53,0.35);
-    }
-
-    .btn-primary:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .form-msg {
-      font-size: 0.88rem;
-      min-height: 20px;
-      transition: all 0.3s;
-    }
+    .waitlist-form input.ok { border-color: var(--accent); }
+    .btn-primary { background: var(--accent); color: #0a0a0f; border: none; border-radius: 100px; padding: 14px 32px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s; white-space: nowrap; }
+    .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(200,241,53,0.35); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+    .form-msg { font-size: 0.88rem; min-height: 20px; }
     .form-msg.error { color: #ef4444; }
     .form-msg.success { color: var(--accent); }
     .form-msg.info { color: var(--muted); }
 
-    /* SUCCESS STATE */
-    .success-state {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      animation: fadeUp 0.5s ease both;
-    }
+    /* SUCCESS */
+    .success-state { display: none; flex-direction: column; align-items: center; gap: 8px; animation: fadeUp 0.5s ease both; }
+    .success-icon { width: 56px; height: 56px; background: rgba(200,241,53,0.1); border: 1px solid rgba(200,241,53,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+    .success-title { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+    .success-sub { color: var(--muted); font-size: 0.9rem; }
 
-    .success-icon {
-      width: 56px;
-      height: 56px;
-      background: rgba(200,241,53,0.1);
-      border: 1px solid rgba(200,241,53,0.3);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-    }
-
-    .success-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .success-sub {
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .social-proof {
-      color: var(--muted);
-      font-size: 0.85rem;
-      animation: fadeUp 0.6s 0.4s ease both;
-    }
+    .social-proof { color: var(--muted); font-size: 0.85rem; animation: fadeUp 0.6s 0.4s ease both; }
     .social-proof strong { color: var(--text); }
 
-    /* FEATURES */
-    .section {
-      padding: 100px 48px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+    /* SECTIONS */
+    .section { padding: 100px 48px; max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; font-weight: 600; }
+    .section-title { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; max-width: 600px; }
 
-    .section-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 16px;
-      font-weight: 600;
-    }
-
-    .section-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      max-width: 600px;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      margin-top: 60px;
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 32px;
-      transition: border-color 0.3s, transform 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(200,241,53,0.03) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
+    /* CARDS */
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 60px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 32px; transition: border-color 0.3s, transform 0.3s; position: relative; overflow: hidden; }
+    .card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(200,241,53,0.03) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; }
     .card:hover { border-color: rgba(200,241,53,0.3); transform: translateY(-4px); }
     .card:hover::before { opacity: 1; }
-
     .card-icon { font-size: 2.2rem; margin-bottom: 20px; display: block; }
-
-    .card h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
+    .card h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; }
     .card p { color: var(--muted); line-height: 1.7; font-size: 0.95rem; }
 
     /* SIMULATOR */
-    .simulator-section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 32px;
-      padding: 60px;
-      margin: 0 48px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .simulator-section::before {
-      content: '';
-      position: absolute;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 70%);
-      top: -100px;
-      right: -100px;
-      pointer-events: none;
-    }
-
-    .sim-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-    }
-
-    .sim-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.2rem;
-      font-weight: 800;
-      line-height: 1.15;
-      margin-bottom: 20px;
-    }
-
+    .simulator-section { background: var(--surface); border: 1px solid var(--border); border-radius: 32px; padding: 60px; margin: 0 48px; position: relative; overflow: hidden; }
+    .simulator-section::before { content: ''; position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 70%); top: -100px; right: -100px; pointer-events: none; }
+    .sim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .sim-title { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; line-height: 1.15; margin-bottom: 20px; }
     .sim-desc { color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
-
     .sim-stats { display: flex; gap: 32px; }
-
-    .stat-value {
-      font-family: 'Syne', sans-serif;
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--accent);
-    }
-
+    .stat-value { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--accent); }
     .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
-
-    .sim-visual {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 28px;
-    }
-
-    .sim-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-    }
-
+    .sim-visual { background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 28px; }
+    .sim-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
     .sim-header-title { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
     .sim-amount { font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800; margin-bottom: 8px; }
     .sim-change { font-size: 0.85rem; color: var(--accent); margin-bottom: 24px; }
-
     .chart-bars { display: flex; align-items: flex-end; gap: 6px; height: 80px; }
-
-    .bar {
-      flex: 1;
-      border-radius: 4px 4px 0 0;
-      animation: growUp 1s ease both;
-    }
-
-    @keyframes growUp {
-      from { transform: scaleY(0); transform-origin: bottom; }
-      to { transform: scaleY(1); transform-origin: bottom; }
-    }
-
-    .bar:nth-child(1) { height: 30%; background: var(--surface2); animation-delay: 0.1s; }
-    .bar:nth-child(2) { height: 45%; background: var(--surface2); animation-delay: 0.15s; }
-    .bar:nth-child(3) { height: 38%; background: var(--surface2); animation-delay: 0.2s; }
-    .bar:nth-child(4) { height: 55%; background: var(--surface2); animation-delay: 0.25s; }
-    .bar:nth-child(5) { height: 48%; background: var(--surface2); animation-delay: 0.3s; }
-    .bar:nth-child(6) { height: 65%; background: rgba(200,241,53,0.4); animation-delay: 0.35s; }
-    .bar:nth-child(7) { height: 72%; background: rgba(200,241,53,0.5); animation-delay: 0.4s; }
-    .bar:nth-child(8) { height: 80%; background: rgba(200,241,53,0.6); animation-delay: 0.45s; }
-    .bar:nth-child(9) { height: 88%; background: rgba(200,241,53,0.8); animation-delay: 0.5s; }
-    .bar:nth-child(10) { height: 100%; background: var(--accent); animation-delay: 0.55s; }
+    .bar { flex: 1; border-radius: 4px 4px 0 0; animation: growUp 1s ease both; }
+    @keyframes growUp { from { transform: scaleY(0); transform-origin: bottom; } to { transform: scaleY(1); transform-origin: bottom; } }
+    .bar:nth-child(1)  { height: 30%;  background: var(--surface2);      animation-delay: 0.10s; }
+    .bar:nth-child(2)  { height: 45%;  background: var(--surface2);      animation-delay: 0.15s; }
+    .bar:nth-child(3)  { height: 38%;  background: var(--surface2);      animation-delay: 0.20s; }
+    .bar:nth-child(4)  { height: 55%;  background: var(--surface2);      animation-delay: 0.25s; }
+    .bar:nth-child(5)  { height: 48%;  background: var(--surface2);      animation-delay: 0.30s; }
+    .bar:nth-child(6)  { height: 65%;  background: rgba(200,241,53,0.4); animation-delay: 0.35s; }
+    .bar:nth-child(7)  { height: 72%;  background: rgba(200,241,53,0.5); animation-delay: 0.40s; }
+    .bar:nth-child(8)  { height: 80%;  background: rgba(200,241,53,0.6); animation-delay: 0.45s; }
+    .bar:nth-child(9)  { height: 88%;  background: rgba(200,241,53,0.8); animation-delay: 0.50s; }
+    .bar:nth-child(10) { height: 100%; background: var(--accent);        animation-delay: 0.55s; }
 
     /* MODULES */
-    .modules-row {
-      display: flex;
-      gap: 16px;
-      margin-top: 60px;
-      overflow-x: auto;
-      padding-bottom: 16px;
-      scrollbar-width: none;
-    }
-
-    .module-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 28px;
-      min-width: 220px;
-      flex-shrink: 0;
-      transition: border-color 0.3s, transform 0.3s;
-      cursor: pointer;
-    }
-
+    .modules-row { display: flex; gap: 16px; margin-top: 60px; overflow-x: auto; padding-bottom: 16px; scrollbar-width: none; }
+    .module-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; min-width: 220px; flex-shrink: 0; transition: border-color 0.3s, transform 0.3s; cursor: pointer; }
     .module-card:hover { border-color: rgba(200,241,53,0.4); transform: translateY(-3px); }
     .module-emoji { font-size: 2rem; margin-bottom: 16px; display: block; }
-
-    .module-title {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      margin-bottom: 8px;
-    }
-
+    .module-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 8px; }
     .module-count { font-size: 0.8rem; color: var(--muted); }
-
-    .progress-bar {
-      height: 3px;
-      background: var(--surface2);
-      border-radius: 100px;
-      margin-top: 16px;
-      overflow: hidden;
-    }
-
+    .progress-bar { height: 3px; background: var(--surface2); border-radius: 100px; margin-top: 16px; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--accent); border-radius: 100px; }
 
     /* CTA */
-    .cta-section {
-      text-align: center;
-      padding: 120px 48px;
-      position: relative;
-    }
-
-    .cta-section::before {
-      content: '';
-      position: absolute;
-      width: 800px;
-      height: 400px;
-      background: radial-gradient(ellipse, rgba(124,58,237,0.12) 0%, transparent 70%);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-
-    .cta-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 20px;
-    }
-
-    .cta-sub { color: var(--muted); font-size: 1.1rem; margin-bottom: 48px; }
+    .cta-section { text-align: center; padding: 120px 48px; position: relative; }
+    .cta-section::before { content: ''; position: absolute; width: 800px; height: 400px; background: radial-gradient(ellipse, rgba(124,58,237,0.12) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+    .cta-title { font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 20px; }
+    .cta-sub { color: var(--muted); font-size: 1.1rem; margin-bottom: 32px; }
 
     /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 48px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
+    footer { border-top: 1px solid var(--border); padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.85rem; }
 
     /* FLOATING */
-    .float-tag {
-      position: absolute;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 16px;
-      font-size: 0.8rem;
-      animation: float 4s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    .float-tag-1 { top: 20%; left: 5%; animation-delay: 0s; }
+    .float-tag { position: absolute; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; font-size: 0.8rem; animation: float 4s ease-in-out infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .float-tag-1 { top: 20%; left: 5%; }
     .float-tag-2 { top: 40%; right: 5%; animation-delay: 1.5s; }
     .tag-label { color: var(--muted); font-size: 0.7rem; margin-bottom: 4px; }
     .tag-value { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent); }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* COUNTER */
-    .counter-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(200,241,53,0.08);
-      border: 1px solid rgba(200,241,53,0.2);
-      border-radius: 100px;
-      padding: 6px 14px;
-      font-size: 0.82rem;
-      color: var(--accent);
-      margin-top: 8px;
-    }
-
-    /* RESPONSIVE MOBILE */
+    /* RESPONSIVE */
     @media (max-width: 768px) {
       nav { padding: 16px 20px; }
       .nav-links { display: none !important; }
       .nav-cta { padding: 8px 16px; font-size: 0.82rem; }
-
       .hero { padding: 60px 20px; min-height: auto; }
       h1 { font-size: 2.4rem; }
       .hero-sub { font-size: 1rem; }
-
       .waitlist-form { flex-direction: column; align-items: center; width: 100%; }
       .waitlist-form input { width: 100%; max-width: 100%; }
       .btn-primary { width: 100%; max-width: 100%; }
-
       .section { padding: 60px 20px; }
       .section-title { font-size: 1.8rem; }
-
       .grid-3 { grid-template-columns: 1fr; }
-
       .simulator-section { margin: 0 20px; padding: 32px 20px; }
       .sim-grid { grid-template-columns: 1fr; gap: 32px; }
       .sim-title { font-size: 1.6rem; }
       .sim-stats { flex-wrap: wrap; gap: 20px; }
-
-      .modules-row { padding-bottom: 12px; }
       .module-card { min-width: 180px; padding: 20px; }
-
       .float-tag { display: none; }
-
       .cta-section { padding: 80px 20px; }
       .cta-title { font-size: 2rem; }
-
-      footer {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-        padding: 24px 20px;
-        font-size: 0.78rem;
-      }
+      footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px 20px; font-size: 0.78rem; }
     }
-
-    @media (max-width: 400px) {
-      h1 { font-size: 2rem; }
-      .sim-amount { font-size: 1.8rem; }
-    }
+    @media (max-width: 400px) { h1 { font-size: 2rem; } .sim-amount { font-size: 1.8rem; } }
   </style>
 </head>
 <body>
 
   <nav>
-    <a href="#" class="logo" style="text-decoration:none; color:inherit;">Kre<span>zio</span></a>
-    <div class="nav-links" style="display:flex; gap:32px;">
+    <a href="#" class="logo">Kre<span>zio</span></a>
+    <div class="nav-links" style="display:flex;gap:32px;">
       <a href="#apprendre">Apprendre</a>
       <a href="#simuler">Simuler</a>
       <a href="#investir">Investir</a>
@@ -628,44 +199,35 @@
       <div class="tag-value">+8 420 €</div>
     </div>
 
-    <div class="badge">
-      <div class="badge-dot"></div>
-      Bêta ouverte — Places limitées
-    </div>
+    <div class="badge"><div class="badge-dot"></div>Bêta ouverte — Places limitées</div>
 
-    <h1>
-      Transforme tes<br/>
-      <em>dépenses du quotidien</em><br/>
-      en <span class="purple">investissements</span>
-    </h1>
+    <h1>Transforme tes<br/><em>dépenses du quotidien</em><br/>en <span class="purple">investissements</span></h1>
 
     <p class="hero-sub">
       Apprends la finance en 5 minutes par jour. Simule ta croissance.
       Prépare-toi à investir ton cashback automatiquement — sans douleur, sans jargon.
     </p>
 
-    <div class="waitlist-wrap" id="waitlist">
+    <!-- COUNTER HERO — toujours visible, jamais caché -->
+    <div class="counter-badge" style="margin-top:32px;">
+      🔥 <span id="count-hero">...</span> personnes sur la waitlist
+    </div>
+
+    <div class="waitlist-wrap" id="waitlist" style="margin-top:24px;">
       <div class="waitlist-form" id="form-hero">
-        <input
-          type="email"
-          id="email-hero"
-          placeholder="ton@email.com"
-          onkeydown="if(event.key==='Enter') submitWaitlist('hero')"
-        />
-        <button class="btn-primary" id="btn-hero" onclick="submitWaitlist('hero')">
-          Je veux ma place →
-        </button>
+        <input type="email" id="email-hero" placeholder="ton@email.com"
+          onkeydown="if(event.key==='Enter') submitWaitlist('hero')" />
+        <button class="btn-primary" id="btn-hero" onclick="submitWaitlist('hero')">Je veux ma place →</button>
       </div>
       <div class="form-msg" id="msg-hero"></div>
       <div class="success-state" id="success-hero">
         <div class="success-icon">✓</div>
-        <div class="success-title">Tu es sur la liste !</div>
-        <div class="success-sub">On te prévient en premier dès l'ouverture de la bêta.</div>
-        <div class="counter-badge" id="counter-hero">🔥 <span>...</span> personnes sur la waitlist</div>
+        <div class="success-title">Bienvenue dans la bêta !</div>
+        <div class="success-sub">On te prévient en premier dès l'ouverture. Merci de nous rejoindre 🙌</div>
       </div>
     </div>
 
-    <p class="social-proof" id="social-proof-hero">
+    <p class="social-proof" id="social-proof-hero" style="margin-top:20px;">
       Rejoins les premiers à découvrir Krezio
     </p>
   </section>
@@ -674,36 +236,12 @@
     <div class="section-label">Ce que tu vas trouver</div>
     <h2 class="section-title">Tout ce qu'on t'a jamais appris sur l'argent</h2>
     <div class="grid-3">
-      <div class="card">
-        <span class="card-icon">🎓</span>
-        <h3>Apprentissage gamifié</h3>
-        <p>Modules courts façon Duolingo. ETF, Crypto, Or, Fiscalité expliqués comme si t'avais 15 ans.</p>
-      </div>
-      <div class="card">
-        <span class="card-icon">🤖</span>
-        <h3>Coach IA personnel</h3>
-        <p>Pose n'importe quelle question finance. Ton coach IA retient ton niveau et adapte ses réponses. 24/7.</p>
-      </div>
-      <div class="card">
-        <span class="card-icon">📊</span>
-        <h3>Simulateurs temps réel</h3>
-        <p>Vois combien ton arrondi quotidien devient en 5, 10, 20 ans. Sans ouvrir Excel.</p>
-      </div>
-      <div class="card">
-        <span class="card-icon">💸</span>
-        <h3>Cashback & arrondi</h3>
-        <p>Simule combien tu aurais épargné sur chaque produit sans t'en rendre compte.</p>
-      </div>
-      <div class="card">
-        <span class="card-icon">🏆</span>
-        <h3>Classements & badges</h3>
-        <p>Progresse, débloque des badges, défie ta communauté. La finance ennuyeuse, c'est fini.</p>
-      </div>
-      <div class="card">
-        <span class="card-icon">🗺️</span>
-        <h3>Roadmap investisseur</h3>
-        <p>Un plan pas à pas pour ouvrir ton PEA, comprendre la flat tax, investir pas à pas.</p>
-      </div>
+      <div class="card"><span class="card-icon">🎓</span><h3>Apprentissage gamifié</h3><p>Modules courts façon Duolingo. ETF, Crypto, Or, Fiscalité — expliqués comme si t'avais 15 ans.</p></div>
+      <div class="card"><span class="card-icon">🤖</span><h3>Coach IA personnel</h3><p>Pose n'importe quelle question finance. Ton coach IA retient ton niveau et adapte ses réponses. 24/7.</p></div>
+      <div class="card"><span class="card-icon">📊</span><h3>Simulateurs temps réel</h3><p>Vois combien ton arrondi quotidien devient en 5, 10, 20 ans. Sans ouvrir Excel.</p></div>
+      <div class="card"><span class="card-icon">💸</span><h3>Cashback & arrondi</h3><p>Simule combien tu aurais épargné sans t'en rendre compte. Comme Bitstack mais pour tous les produits.</p></div>
+      <div class="card"><span class="card-icon">🏆</span><h3>Classements & badges</h3><p>Progresse, débloque des badges, défie ta communauté. La finance ennuyeuse, c'est fini.</p></div>
+      <div class="card"><span class="card-icon">🗺️</span><h3>Roadmap investisseur</h3><p>Un plan pas-à-pas pour ouvrir ton PEA, comprendre la flat tax, investir méthodiquement.</p></div>
     </div>
   </section>
 
@@ -712,23 +250,11 @@
       <div>
         <div class="section-label">Simulateur</div>
         <h2 class="sim-title">Et si tu arrondissais chaque achat à l'euro supérieur ?</h2>
-        <p class="sim-desc">
-          En moyenne, ça représente 0,50€ par transaction. Pour 3 achats par jour,
-          c'est 45€/mois qui peuvent travailler pour toi.
-        </p>
+        <p class="sim-desc">En moyenne, ça représente 0,50€ par transaction. Pour 3 achats par jour, c'est 45€/mois qui peuvent travailler pour toi.</p>
         <div class="sim-stats">
-          <div>
-            <div class="stat-value">5 ans</div>
-            <div class="stat-label">Horizon ETF World</div>
-          </div>
-          <div>
-            <div class="stat-value">+2 940€</div>
-            <div class="stat-label">vs 2 700€ investi</div>
-          </div>
-          <div>
-            <div class="stat-value">+8,9%</div>
-            <div class="stat-label">Rendement annualisé</div>
-          </div>
+          <div><div class="stat-value">5 ans</div><div class="stat-label">Horizon ETF World</div></div>
+          <div><div class="stat-value">+2 940€</div><div class="stat-label">vs 2 700€ investi</div></div>
+          <div><div class="stat-value">+8,9%</div><div class="stat-label">Rendement annualisé</div></div>
         </div>
       </div>
       <div class="sim-visual">
@@ -739,10 +265,8 @@
         <div class="sim-amount">2 940 €</div>
         <div class="sim-change">↑ +240 € vs capital investi</div>
         <div class="chart-bars">
-          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-          <div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
         </div>
         <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:0.7rem;color:var(--muted)">
           <span>Jan</span><span>Mar</span><span>Jun</span><span>Sep</span><span>Déc</span>
@@ -754,66 +278,17 @@
   <section class="section" id="investir">
     <div class="section-label">Modules disponibles</div>
     <h2 class="section-title">De zéro à investisseur éclairé</h2>
-
     <div style="position:relative;">
-
-      <!-- Flèche gauche -->
-      <button onclick="scrollModules(-1)" id="arrow-left" style="
-        position:absolute; left:-20px; top:50%; transform:translateY(-50%);
-        z-index:10; background:var(--surface); border:1px solid var(--border);
-        color:var(--text); width:40px; height:40px; border-radius:50%;
-        cursor:pointer; font-size:1.1rem; display:flex; align-items:center;
-        justify-content:center; transition:all 0.2s; opacity:0.4;
-      ">‹</button>
-
-      <!-- Flèche droite -->
-      <button onclick="scrollModules(1)" id="arrow-right" style="
-        position:absolute; right:-20px; top:50%; transform:translateY(-50%);
-        z-index:10; background:var(--surface); border:1px solid var(--border);
-        color:var(--text); width:40px; height:40px; border-radius:50%;
-        cursor:pointer; font-size:1.1rem; display:flex; align-items:center;
-        justify-content:center; transition:all 0.2s;
-      ">›</button>
-
+      <button onclick="scrollModules(-1)" id="arrow-left" style="position:absolute;left:-20px;top:55%;transform:translateY(-50%);z-index:10;background:var(--surface);border:1px solid var(--border);color:var(--text);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;opacity:0.4;">‹</button>
+      <button onclick="scrollModules(1)"  id="arrow-right" style="position:absolute;right:-20px;top:55%;transform:translateY(-50%);z-index:10;background:var(--surface);border:1px solid var(--border);color:var(--text);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;opacity:1;">›</button>
       <div class="modules-row" id="modules-row">
-        <div class="module-card">
-          <span class="module-emoji">📈</span>
-          <div class="module-title">ETF & Actions</div>
-          <div class="module-count">8 leçons · ~40 min</div>
-          <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-        </div>
-        <div class="module-card">
-          <span class="module-emoji">₿</span>
-          <div class="module-title">Crypto</div>
-          <div class="module-count">6 leçons · ~30 min</div>
-          <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-        </div>
-        <div class="module-card">
-          <span class="module-emoji">🥇</span>
-          <div class="module-title">Métaux précieux</div>
-          <div class="module-count">5 leçons · ~25 min</div>
-          <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-        </div>
-        <div class="module-card">
-          <span class="module-emoji">🏛️</span>
-          <div class="module-title">Fiscalité</div>
-          <div class="module-count">7 leçons · ~35 min</div>
-          <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-        </div>
-        <div class="module-card">
-          <span class="module-emoji">🌿</span>
-          <div class="module-title">ESG </div>
-          <div class="module-count">4 leçons · ~20 min</div>
-          <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-        </div>
-        <div class="module-card" style="border-style:dashed;opacity:0.5">
-          <span class="module-emoji">🔒</span>
-          <div class="module-title">Private Equity</div>
-          <div class="module-count">Bientôt disponible</div>
-          <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-        </div>
+        <div class="module-card"><span class="module-emoji">📈</span><div class="module-title">ETF & Actions</div><div class="module-count">8 leçons · ~40 min</div><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div></div>
+        <div class="module-card"><span class="module-emoji">₿</span><div class="module-title">Crypto</div><div class="module-count">6 leçons · ~30 min</div><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div></div>
+        <div class="module-card"><span class="module-emoji">🥇</span><div class="module-title">Métaux précieux</div><div class="module-count">5 leçons · ~25 min</div><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div></div>
+        <div class="module-card"><span class="module-emoji">🏛️</span><div class="module-title">Fiscalité</div><div class="module-count">7 leçons · ~35 min</div><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div></div>
+        <div class="module-card"><span class="module-emoji">🌿</span><div class="module-title">ESG & Impact</div><div class="module-count">4 leçons · ~20 min</div><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div></div>
+        <div class="module-card" style="border-style:dashed;opacity:0.5"><span class="module-emoji">🔒</span><div class="module-title">Private Equity</div><div class="module-count">Bientôt disponible</div><div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div></div>
       </div>
-
     </div>
   </section>
 
@@ -821,76 +296,71 @@
     <h2 class="cta-title">Prêt à faire<br/>travailler ton argent ?</h2>
     <p class="cta-sub">Rejoins la bêta. C'est gratuit. C'est maintenant.</p>
 
+    <!-- COUNTER CTA — toujours visible, jamais caché -->
+    <div class="counter-badge" style="margin-bottom:32px;">
+      🔥 <span id="count-cta">...</span> personnes sur la waitlist
+    </div>
+
     <div class="waitlist-wrap">
       <div class="waitlist-form" id="form-cta">
-        <input
-          type="email"
-          id="email-cta"
-          placeholder="ton@email.com"
-          onkeydown="if(event.key==='Enter') submitWaitlist('cta')"
-        />
-        <button class="btn-primary" id="btn-cta" onclick="submitWaitlist('cta')">
-          Rejoindre la waitlist →
-        </button>
+        <input type="email" id="email-cta" placeholder="ton@email.com"
+          onkeydown="if(event.key==='Enter') submitWaitlist('cta')" />
+        <button class="btn-primary" id="btn-cta" onclick="submitWaitlist('cta')">Rejoindre la waitlist →</button>
       </div>
       <div class="form-msg" id="msg-cta"></div>
       <div class="success-state" id="success-cta">
         <div class="success-icon">✓</div>
-        <div class="success-title">Tu es sur la liste !</div>
-        <div class="success-sub">On te prévient en premier dès l'ouverture de la bêta.</div>
-        <div class="counter-badge" id="counter-cta">🔥 <span>...</span> personnes sur la waitlist</div>
+        <div class="success-title">Bienvenue dans la bêta !</div>
+        <div class="success-sub">On te prévient en premier dès l'ouverture. Merci de nous rejoindre 🙌</div>
       </div>
     </div>
   </section>
 
   <footer>
-    <div class="logo" style="font-size:1.1rem">Kre<span style="color:var(--accent)">zio</span></div>
+    <a href="#" class="logo" style="font-size:1.1rem;">Kre<span>zio</span></a>
     <div>Krezio · 2026</div>
     <div>Pas de conseil financier · Simulateur pédagogique</div>
   </footer>
 
   <script>
-    // ─── SCROLL VERS WAITLIST ─────────────────────────────────────
-    function scrollToWaitlist(e) {
-      e.preventDefault()
-      const target = document.getElementById('waitlist-cta')
-      if (!target) return
-      const offset = 80
-      const top = target.getBoundingClientRect().top + window.scrollY - offset
-      window.scrollTo({ top, behavior: 'smooth' })
-      setTimeout(() => {
-        const input = document.getElementById('email-cta')
-        if (input) input.focus()
-      }, 600)
-    }
-
-    // ─── SUPABASE INIT ───────────────────────────────────────────
+    // ── SUPABASE ──────────────────────────────────────────────────
     const { createClient } = supabase
     const sb = createClient(
       'https://twzdtbkwormispmspjai.supabase.co',
       'sb_publishable_2w46qHLOgKKwdhRuMN0p-w_7TTvUISX'
     )
 
-    // ─── COMPTEUR WAITLIST ────────────────────────────────────────
+    // BASE = chiffre de départ fictif
+    // Formule : BASE = total voulu - nb vrais inscrits actuels
+    // Ex : tu veux afficher 350, t'as 8 inscrits → BASE = 342
+    const BASE = 342
+
+    // Met à jour les deux counters + social proof
+    function updateDisplay(total) {
+      document.getElementById('count-hero').textContent = total
+      document.getElementById('count-cta').textContent  = total
+      document.getElementById('social-proof-hero').innerHTML =
+        `<strong>${total} personnes</strong> déjà sur la waitlist`
+    }
+
+    // Récupère le vrai count depuis Supabase et affiche BASE + count
     async function loadCount() {
       try {
-        const { count } = await sb
+        const { count, error } = await sb
           .from('waitlist')
           .select('*', { count: 'exact', head: true })
-        if (count !== null) {
-          document.querySelectorAll('.counter-badge span').forEach(el => {
-            el.textContent = count
-          })
-          if (count > 0) {
-            document.getElementById('social-proof-hero').innerHTML =
-              `<strong>${count} personne${count > 1 ? 's' : ''}</strong> déjà sur la waitlist`
-          }
-        }
-      } catch (e) {}
+        if (error) throw error
+        updateDisplay(BASE + count)
+      } catch (e) {
+        console.error('Supabase error:', e)
+        updateDisplay(BASE) // fallback si erreur réseau
+      }
     }
+
+    // Charge dès l'arrivée sur la page
     loadCount()
 
-    // ─── SUBMIT WAITLIST ──────────────────────────────────────────
+    // ── SUBMIT ────────────────────────────────────────────────────
     async function submitWaitlist(zone) {
       const input   = document.getElementById(`email-${zone}`)
       const btn     = document.getElementById(`btn-${zone}`)
@@ -899,8 +369,7 @@
       const success = document.getElementById(`success-${zone}`)
       const email   = input.value.trim().toLowerCase()
 
-      // Validation basique
-      input.classList.remove('error', 'success')
+      input.classList.remove('error', 'ok')
       msg.className = 'form-msg'
 
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -910,7 +379,6 @@
         return
       }
 
-      // Loading
       btn.disabled = true
       btn.textContent = '...'
       msg.className = 'form-msg info'
@@ -924,7 +392,7 @@
         if (error) {
           if (error.code === '23505') {
             // Email déjà inscrit
-            input.classList.add('success')
+            input.classList.add('ok')
             msg.className = 'form-msg success'
             msg.textContent = '✓ Tu es déjà sur la liste !'
             btn.disabled = false
@@ -935,11 +403,11 @@
           return
         }
 
-        // Succès
-        form.style.display = 'none'
-        msg.textContent = ''
+        // ✅ Succès — affiche le remerciement + rafraîchit le counter
+        form.style.display    = 'none'
+        msg.textContent       = ''
         success.style.display = 'flex'
-        await loadCount()
+        loadCount() // counter se met à jour silencieusement
 
       } catch (e) {
         btn.disabled = false
@@ -950,38 +418,35 @@
       }
     }
 
-    // ─── ANIMATIONS AU SCROLL ─────────────────────────────────────
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1'
-          entry.target.style.transform = 'translateY(0)'
-        }
+    // ── SCROLL NAV ────────────────────────────────────────────────
+    function scrollToWaitlist(e) {
+      e.preventDefault()
+      const top = document.getElementById('waitlist-cta').getBoundingClientRect().top + window.scrollY - 80
+      window.scrollTo({ top, behavior: 'smooth' })
+      setTimeout(() => document.getElementById('email-cta')?.focus(), 600)
+    }
+
+    // ── CAROUSEL ──────────────────────────────────────────────────
+    function scrollModules(dir) {
+      document.getElementById('modules-row').scrollBy({ left: dir * 240, behavior: 'smooth' })
+    }
+    document.getElementById('modules-row').addEventListener('scroll', function () {
+      document.getElementById('arrow-left').style.opacity  = this.scrollLeft > 20 ? '1' : '0.4'
+      document.getElementById('arrow-right').style.opacity = this.scrollLeft < (this.scrollWidth - this.clientWidth - 20) ? '1' : '0.4'
+    })
+
+    // ── ANIMATIONS SCROLL ─────────────────────────────────────────
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)' }
       })
     }, { threshold: 0.1 })
-
     document.querySelectorAll('.card, .module-card, .sim-visual').forEach(el => {
       el.style.opacity = '0'
       el.style.transform = 'translateY(20px)'
       el.style.transition = 'opacity 0.5s ease, transform 0.5s ease, border-color 0.3s'
-      observer.observe(el)
+      obs.observe(el)
     })
-
-    // ─── CAROUSEL MODULES ─────────────────────────────────────────
-function scrollModules(dir) {
-  const row = document.getElementById('modules-row')
-  row.scrollBy({ left: dir * 240, behavior: 'smooth' })
-}
-
-// Cacher/montrer les flèches selon position scroll
-document.getElementById('modules-row').addEventListener('scroll', function() {
-  const row = this
-  const arrowLeft  = document.getElementById('arrow-left')
-  const arrowRight = document.getElementById('arrow-right')
-  arrowLeft.style.opacity  = row.scrollLeft > 20 ? '1' : '0.4'
-  arrowRight.style.opacity = row.scrollLeft < (row.scrollWidth - row.clientWidth - 20) ? '1' : '0.4'
-})
-
   </script>
 </body>
 </html>
