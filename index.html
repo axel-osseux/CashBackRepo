@@ -227,9 +227,6 @@
       </div>
     </div>
 
-    <p class="social-proof" id="social-proof-hero" style="margin-top:20px;">
-      Rejoins les premiers à découvrir Krezio
-    </p>
   </section>
 
   <section class="section" id="apprendre">
@@ -339,8 +336,7 @@
     function updateDisplay(total) {
       document.getElementById('count-hero').textContent = total
       document.getElementById('count-cta').textContent  = total
-      document.getElementById('social-proof-hero').innerHTML =
-        `<strong>${total} personnes</strong> déjà sur la waitlist`
+
     }
 
     // Récupère le vrai count depuis Supabase et affiche BASE + count
